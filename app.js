@@ -60,7 +60,10 @@ app.post('/play', function(req, res) {
             return res.send('Could not match a track lol ¯|_(ツ)_/¯');
           }
           else {
-            return res.send('Matched ' + '"'results[0].name'": ' + results[0].preview_url + results[0].uri);
+            return res.send(
+              'Matched ' + '"' + results[0].name + '": ' + '\n' +
+              results[0].preview_url + '\n' +
+              results[0].uri);
           }
         }, function(err) {
           return res.send(err.message);
