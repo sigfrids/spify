@@ -50,7 +50,7 @@ app.use('/play', function(req, res, next) {
   next();
 });
 
-app.get('/play', function(req, res) {
+app.post('/play', function(req, res) {
   spotifyApi.refreshAccessToken()
     .then(function(data) {
       spotifyApi.searchTracks(req.body.text)
