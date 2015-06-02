@@ -18,6 +18,8 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+var spifyBotUrl = 'https://hooks.slack.com/services/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';
+
 app.get('/', function(req, res) {
   if (spotifyApi.getAccessToken()) {
     return res.send('You are logged in.');
@@ -68,7 +70,13 @@ app.post('/play', function(req, res) {
             return res.send('Could not match a track lol ¯|_(ツ)_/¯');
           }
           else {
-            return res.json(makeSlackResponse(results[0].name, results[0].preview_url, results[0].uri));
+            var match = res.json(makeSlackResponse(results[0].name, results[0].preview_url, results[0].uri));
+            return request.post({
+              url: spifyBotUrl,
+              body: 'payload=' + match,
+            }, function (error, response, body){
+
+            });
 
             //res.send(
             //  'Matched ' + '"' + results[0].name + '": ' + '\n' +
