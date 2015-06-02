@@ -50,6 +50,14 @@ app.use('/play', function(req, res, next) {
   next();
 });
 
+var makeSlackResponse = function(artist, preview, uri) {
+  var spotifyLink = "https://open.spotify.com/track/";
+  var textResponse = 'Matched ' + '"' + artist + '": ' + '\n' +
+      preview+ '\n' +
+      uri;
+  return {'text' : textResponse};
+};
+
 app.post('/play', function(req, res) {
   spotifyApi.refreshAccessToken()
     .then(function(data) {
@@ -60,11 +68,7 @@ app.post('/play', function(req, res) {
             return res.send('Could not match a track lol ¯|_(ツ)_/¯');
           }
           else {
-            var textResponse = 'Matched ' + '"' + results[0].name + '": ' + '\n' +
-              results[0].preview_url + '\n' +
-              results[0].uri;
-
-            return {'text' : textResponse};
+            return res.json(makeSlackResponse(results[0].name, results[0].preview_url, results[0].uri));
 
             //res.send(
             //  'Matched ' + '"' + results[0].name + '": ' + '\n' +
