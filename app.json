@@ -1,0 +1,6 @@
+{
+  "name": "Spify",
+  "description": "Match phrases with Spotify tracks and play them in Slack",
+  "repository": "https://github.com/sigfrids/spify",
+  "keywords": ["slack", "spotify"]
+}

@@ -1,0 +1,27 @@
+{
+  "name": "spify",
+  "version": "0.1.0",
+  "description": "Match phrases with Spotify tracks and play them in Slack",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "sigfrids/spify"
+  },
+  "author": "Fergal Duggan <sligseach@spotify.com>, Karl Sigfrids <sigfrids@spotify.com>",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {
+    "spotify-web-api-node": "~2.0.1",
+    "dotenv": "~1.0.0",
+    "express": "~4.12.3",
+    "request": "~2.53.0",
+    "body-parser": "~1.12.2"
+  },
+  "engines": {
+    "node": "0.10.x"
+  }
+}
