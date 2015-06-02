@@ -59,12 +59,9 @@ app.get('/play', function(req, res) {
           if (results.length === 0) {
             return res.send('Could not match a track lol ¯|_(ツ)_/¯');
           }
-          var trackName = results[0].name;
-            .then(function(data) {
-              return res.send('Track name returned: ' + trackName);
-            }, function(err) {
-              return res.send(err.message);
-            });
+          else {
+            return res.send('Track name returned: ' + results[0].name);
+          }
         }, function(err) {
           return res.send(err.message);
         });
