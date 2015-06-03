@@ -32,20 +32,14 @@ app.post('/play', function(req, res) {
           }
           else {
             var spifyBody = '{"attachments": [ {';
-            spifyBody += '"pretext": "Spify found"';
-            spifyBody += '"title": "' + results[0].name + '"';
-            spifyBody += '"title_link": "' + results[0].preview_url + '"';
-            spifyBody += '"text": "' + results[0].artists[0].name + '"';
-            //spifyBody += '"text": "<' + results[0].preview_url + '|' + results[0].name + '>"';
-            spifyBody += '"thumb_url: "' + results[0].album.images[2].url + '"';
+            spifyBody += '"pretext": "Spify found",';
+            spifyBody += '"title": "' + results[0].name + '",';
+            spifyBody += '"title_link": "' + results[0].preview_url + '",';
+            spifyBody += '"text": "' + results[0].artists[0].name + '",';
+            spifyBody += '"text": "<' + results[0].preview_url + '|' + results[0].name + '>",';
+            spifyBody += '"thumb_url: "' + results[0].album.images[2].url + '",';
             spifyBody += '"color": "#2ebd59"';
             spifyBody += '}]}';
-
-            //body: '{"attachments": [ {
-            // "fallback": "Network traffic (kb/s): How does this look? @slack-ops - Sent by Julie Dodd - https://datadog.com/path/to/event",
-            // "title": "Network traffic (kb/s)", "title_link": "https://datadog.com/path/to/event",
-            // "text": "How does this look? @slack-ops - Sent by Julie Dodd",
-            // "image_url": "https://datadoghq.com/snapshot/path/to/snapshot.png", "color": "#764FA5"
 
             return request.post({
               url: spifyBotUrl,
