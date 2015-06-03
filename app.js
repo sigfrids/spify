@@ -34,11 +34,13 @@ app.post('/play', function(req, res) {
             var spifyBody = '{"attachments": [ {';
             spifyBody += '"pretext": "spify jumba gumba to", ';
             spifyBody += '"title": "' + results[0].name + '", ';
-            spifyBody += '"title_link": "' + results[0].preview_url + '", ';
+            spifyBody += '"title_link": "' + results[0].uri + '", ';
             spifyBody += '"text": "' + results[0].artists[0].name + '\\n' + results[0].album.name + '", ';
             spifyBody += '"thumb_url": "' + results[0].album.images[1].url + '", ';
             spifyBody += '"color": "#2ebd59"';
             spifyBody += '}]}';
+
+            //preview_url
 
             return request.post({
               url: spifyBotUrl,
