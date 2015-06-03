@@ -32,9 +32,9 @@ app.post('/play', function(req, res) {
           }
           else {
             var spifyBody = '{"attachments": [ {';
-            spifyBody += '"pretext": "Spify found", ';
-            //spifyBody += '"title": "' + results[0].name + '", ';
-            //spifyBody += '"title_link": "' + results[0].preview_url + '", ';
+            spifyBody += '"pretext": "spify says", ';
+            spifyBody += '"title": "' + results[0].name + '", ';
+            spifyBody += '"title_link": "' + results[0].preview_url + '", ';
             //spifyBody += '"text": "' + results[0].artists[0].name + '", ';
             //spifyBody += '"text": "<' + results[0].preview_url + '|' + results[0].name + '>", ';
             //spifyBody += '"thumb_url: "' + results[0].album.images[2].url + '", ';
