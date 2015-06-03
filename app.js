@@ -40,7 +40,7 @@ app.post('/play', function(req, res) {
             spifyBody += '"color": "#1ED760"';
             spifyBody += '}]}';*/
 
-            var spifyBody = '{"text": "<https://embed.spotify.com/?uri=spotify%3Atrack%3A4th1RQAelzqgY7wL53UGQt>"}';
+            var spifyBody = '{"text": "<iframe src="https://embed.spotify.com/?uri=spotify%3Atrack%3A4th1RQAelzqgY7wL53UGQt" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>"}';
 
             //results[0].preview_url
             //results[0].external_urls.spotify
