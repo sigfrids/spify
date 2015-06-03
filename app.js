@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-var spifyBotUrl = "https://hooks.slack.com/services/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";
+var spifyBotUrl = "https://hooks.slack.com/services/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";
 
 app.get('/', function(req, res) {
   if (spotifyApi.getAccessToken()) {
@@ -70,26 +70,21 @@ app.post('/play', function(req, res) {
             return res.send('Could not match a track lol ¯|_(ツ)_/¯');
           }
           else {
-            var match = makeSlackResponse(results[0].name, results[0].preview_url, results[0].uri);
+            //var match = makeSlackResponse(results[0].name, results[0].preview_url, results[0].uri);
             return request.post({
               url: spifyBotUrl,
               body: "hello team"
             }, function (error, response, body){
               if (error) {
-                return res.status(500).send('Somethings wrong');
+                return res.send('Somethings wrong');
               }
             });
-
-            //res.send(
-            //  'Matched ' + '"' + results[0].name + '": ' + '\n' +
-            //  results[0].preview_url + '\n' +
-            //  results[0].uri);
           }
         }, function(err) {
           return res.send(err.message);
         });
     }, function(err) {
-      return res.send('Could not referesh access token, try reauthenticating.');
+      return res.send('Could not refresh access token, try reauthenticating.');
     });
 });
 
