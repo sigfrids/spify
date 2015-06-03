@@ -31,9 +31,20 @@ app.post('/play', function(req, res) {
             return res.send('Could not match a track lol ¯|_(ツ)_/¯');
           }
           else {
+            var spifybody = '{"attachments": [{';
+            spifybody += '"text": "<' + results[0].preview_url + '|' + results[0].name + '>';
+            spifybody += '}]}';
+
+            //body: '{"attachments": [ {
+            // "fallback": "Network traffic (kb/s): How does this look? @slack-ops - Sent by Julie Dodd - https://datadog.com/path/to/event",
+            // "title": "Network traffic (kb/s)", "title_link": "https://datadog.com/path/to/event",
+            // "text": "How does this look? @slack-ops - Sent by Julie Dodd",
+            // "image_url": "https://datadoghq.com/snapshot/path/to/snapshot.png", "color": "#764FA5"
+
             return request.post({
               url: spifyBotUrl,
-              body: '{"text": "<' + results[0].preview_url + '|' + results[0].name + '>"}'
+              body: spifybody
+              //body: '{"text": "<' + results[0].preview_url + '|' + results[0].name + '>"}'
               //body: '{"attachments": [ { "fallback": "Network traffic (kb/s): How does this look? @slack-ops - Sent by Julie Dodd - https://datadog.com/path/to/event", "title": "Network traffic (kb/s)", "title_link": "https://datadog.com/path/to/event", "text": "How does this look? @slack-ops - Sent by Julie Dodd", "image_url": "https://datadoghq.com/snapshot/path/to/snapshot.png", "color": "#764FA5"}]}'
             }, function (error, response, body){
               if (error) {
