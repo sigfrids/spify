@@ -34,13 +34,14 @@ app.post('/play', function(req, res) {
             var spifyBody = '{"attachments": [ {';
             spifyBody += '"pretext": "spify jumba gumba to", ';
             spifyBody += '"title": "' + results[0].name + '", ';
-            spifyBody += '"title_link": "' + results[0].external_urls.spotify + '", ';
+            spifyBody += '"title_link": "http://d5ecgvacntsb3.cloudfront.net/widgets/music-links/unit/open-link/index.html?uri=spotify:artist:5lsC3H1vh9YSRQckyGv0Up", ';
             spifyBody += '"text": "' + results[0].artists[0].name + '\\n' + results[0].album.name + '\\n' + results[0].uri + '", ';
             spifyBody += '"thumb_url": "' + results[0].album.images[1].url + '", ';
             spifyBody += '"color": "#2ebd59"';
             spifyBody += '}]}';
 
-            //preview_url
+            //results[0].preview_url
+            //results[0].external_urls.spotify
 
             return request.post({
               url: spifyBotUrl,
