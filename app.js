@@ -35,7 +35,7 @@ app.post('/play', function(req, res) {
             spifyBody += '"pretext": "spify says jumba gumba to", ';
             spifyBody += '"title": "' + results[0].name + '", ';
             spifyBody += '"title_link": "' + results[0].preview_url + '", ';
-            //spifyBody += '"text": "' + results[0].artists[0].name + '", ';
+            spifyBody += '"text": "' + results[0].artists[0].name + '", ';
             spifyBody += '"image_url": "' + results[0].album.images[1].url + '", ';
             spifyBody += '"color": "#2ebd59"';
             spifyBody += '}]}';
