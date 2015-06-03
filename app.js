@@ -31,17 +31,20 @@ app.post('/play', function(req, res) {
             return res.send('Could not match a track lol ¯|_(ツ)_/¯');
           }
           else {
-            var spifyBody = '{"attachments": [ {';
+/*            var spifyBody = '{"attachments": [ {';
             spifyBody += '"pretext": "spify jumba gumba to", ';
             spifyBody += '"title": "' + results[0].name + '", ';
-            spifyBody += '"title_link": "https://embed.spotify.com/?uri=spotify%3Atrack%3A4th1RQAelzqgY7wL53UGQt", ';
+            spifyBody += '"title_link": "' + results[0].preview_url + '", ';
             spifyBody += '"text": "' + 'Artist: ' + results[0].artists[0].name + '\\nAlbum: ' + results[0].album.name + '\\n' + results[0].uri + '", ';
             spifyBody += '"thumb_url": "' + results[0].album.images[1].url + '", ';
-            spifyBody += '"color": "#2ebd59"';
-            spifyBody += '}]}';
+            spifyBody += '"color": "#1ED760"';
+            spifyBody += '}]}';*/
+
+            var spifyBody = '{"text": "<iframe src="https://embed.spotify.com/?uri=spotify%3Atrack%3A4th1RQAelzqgY7wL53UGQt" width="300" height="380" frameborder="0" allowtransparency="true"' + '></iframe' +'>"}';
 
             //results[0].preview_url
             //results[0].external_urls.spotify
+            //results[0].uri
 
             return request.post({
               url: spifyBotUrl,
