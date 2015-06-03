@@ -52,9 +52,9 @@ app.use('/play', function(req, res, next) {
   next();
 });
 
-var makeSlackResponse = function(artist, preview, uri) {
+var makeSlackResponse = function(trackName, preview, uri) {
   var spotifyLink = "https://open.spotify.com/track/";
-  var textResponse = 'Matched ' + '"' + artist + '": ' + '\n' +
+  var textResponse = 'Matched ' + '"' + trackName + '": ' + '\n' +
       preview+ '\n' +
       uri;
   return {'text' : textResponse};
@@ -70,8 +70,7 @@ app.post('/play', function(req, res) {
             return res.send('Could not match a track lol ¯|_(ツ)_/¯');
           }
           else {
-            var match = res.json(makeSlackResponse(results[0].name, results[0].preview_url, results[0].uri));
-            console.log(match);
+            var match = makeSlackResponse(results[0].name, results[0].preview_url, results[0].uri);
             return request.post({
               url: spifyBotUrl,
               body: 'payload=' + match
