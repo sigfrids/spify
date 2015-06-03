@@ -73,9 +73,11 @@ app.post('/play', function(req, res) {
             var match = makeSlackResponse(results[0].name, results[0].preview_url, results[0].uri);
             return request.post({
               url: spifyBotUrl,
-              body: 'payload=' + match
+              body: "hello team"
             }, function (error, response, body){
-
+              if (error) {
+                return res.status(500).send('Somethings wronk');
+              }
             });
 
             //res.send(
