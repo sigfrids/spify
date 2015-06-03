@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-var spifyBotUrl = 'https://hooks.slack.com/services/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';
+var spifyBotUrl = "https://hooks.slack.com/services/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";
 
 app.get('/', function(req, res) {
   if (spotifyApi.getAccessToken()) {
@@ -76,7 +76,7 @@ app.post('/play', function(req, res) {
               body: "hello team"
             }, function (error, response, body){
               if (error) {
-                return res.status(500).send('Somethings wronk');
+                return res.status(500).send('Somethings wrong');
               }
             });
 
