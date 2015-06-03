@@ -71,9 +71,10 @@ app.post('/play', function(req, res) {
           }
           else {
             var match = res.json(makeSlackResponse(results[0].name, results[0].preview_url, results[0].uri));
+            console.log(match);
             return request.post({
               url: spifyBotUrl,
-              body: 'payload=' + match,
+              body: 'payload=' + match
             }, function (error, response, body){
 
             });
