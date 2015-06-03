@@ -20,21 +20,21 @@ app.use(bodyParser.urlencoded({
 
 var spifyBotUrl = "https://hooks.slack.com/services/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";
 
-app.get('/', function(req, res) {
-  if (spotifyApi.getAccessToken()) {
-    return res.send('You are logged in.');
-  }
-  return res.send('<a href="/authorise">Authorise</a>');
-});
+//app.get('/', function(req, res) {
+//  if (spotifyApi.getAccessToken()) {
+//    return res.send('You are logged in.');
+//  }
+//  return res.send('<a href="/authorise">Authorise</a>');
+//});
 
-app.get('/authorise', function(req, res) {
-  var scopes = ['playlist-modify-public', 'playlist-modify-private'];
-  var state  = new Date().getTime();
-  var authoriseURL = spotifyApi.createAuthorizeURL(scopes, state);
-  res.redirect(authoriseURL);
-});
+//app.get('/authorise', function(req, res) {
+//  var scopes = ['playlist-modify-public', 'playlist-modify-private'];
+//  var state  = new Date().getTime();
+//  var authoriseURL = spotifyApi.createAuthorizeURL(scopes, state);
+//  res.redirect(authoriseURL);
+//});
 
-app.get('/callback', function(req, res) {
+/*app.get('/callback', function(req, res) {
   spotifyApi.authorizationCodeGrant(req.query.code)
     .then(function(data) {
       spotifyApi.setAccessToken(data.body['access_token']);
@@ -43,26 +43,26 @@ app.get('/callback', function(req, res) {
     }, function(err) {
       return res.send(err);
     });
-});
+});*/
 
-app.use('/play', function(req, res, next) {
+app.use('/callback', function(req, res, next) {
   if (req.body.token !== process.env.SLACK_TOKEN) {
     return res.status(500).send('Sea surf!');
   }
   next();
 });
 
-var makeSlackResponse = function(trackName, preview, uri) {
-  var spotifyLink = "https://open.spotify.com/track/";
-  var textResponse = 'Matched ' + '"' + trackName + '": ' + '\n' +
-      preview+ '\n' +
-      uri;
-  return {'text' : textResponse};
-};
+//var makeSlackResponse = function(trackName, preview, uri) {
+//  var spotifyLink = "https://open.spotify.com/track/";
+//  var textResponse = 'Matched ' + '"' + trackName + '": ' + '\n' +
+//      preview+ '\n' +
+//      uri;
+//  return {'text' : textResponse};
+//};
 
 app.post('/play', function(req, res) {
-  spotifyApi.refreshAccessToken()
-    .then(function(data) {
+  //spotifyApi.refreshAccessToken()
+    //.then(function(data) {
       spotifyApi.searchTracks(req.body.text)
         .then(function(data) {
           var results = data.body.tracks.items;
@@ -70,23 +70,25 @@ app.post('/play', function(req, res) {
             return res.send('Could not match a track lol ¯|_(ツ)_/¯');
           }
           else {
-            //var match = makeSlackResponse(results[0].name, results[0].preview_url, results[0].uri);
             return request.post({
               url: spifyBotUrl,
-              //body: '{"text": "<' + results[0].preview_url + '|' + results[0].name + '>"}'
-              body: '{"attachments": [ { "fallback": "Network traffic (kb/s): How does this look? @slack-ops - Sent by Julie Dodd - https://datadog.com/path/to/event", "title": "Network traffic (kb/s)", "title_link": "https://datadog.com/path/to/event", "text": "How does this look? @slack-ops - Sent by Julie Dodd", "image_url": "https://datadoghq.com/snapshot/path/to/snapshot.png", "color": "#764FA5"}]}'
+              body: '{"text": 
+              "<' + results[0].preview_url + '|' + results[0].name + '>"'
+              //+ results[0].almum.image[0]
+              + '}'
+              //body: '{"attachments": [ { "fallback": "Network traffic (kb/s): How does this look? @slack-ops - Sent by Julie Dodd - https://datadog.com/path/to/event", "title": "Network traffic (kb/s)", "title_link": "https://datadog.com/path/to/event", "text": "How does this look? @slack-ops - Sent by Julie Dodd", "image_url": "https://datadoghq.com/snapshot/path/to/snapshot.png", "color": "#764FA5"}]}'
             }, function (error, response, body){
               if (error) {
-                return res.send('Somethings wrong');
+                return res.send('Unable to publish to channel.');
               }
             });
           }
         }, function(err) {
           return res.send(err.message);
         });
-    }, function(err) {
-      return res.send('Could not refresh access token, try reauthenticating.');
-    });
+    //}, function(err) {
+    //  return res.send('Could not refresh access token, try reauthenticating.');
+    //});
 });
 
 app.set('port', (process.env.PORT || 5000));
