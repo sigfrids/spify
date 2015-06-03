@@ -34,7 +34,7 @@ var spifyBotUrl = "https://hooks.slack.com/services/T024FA1UX/B05606WQP/9mKR7adA
   res.redirect(authoriseURL);
 });*/
 
-app.post('/callback', function(req, res) {
+app.post('/play', function(req, res) {
   if (req.body.token !== process.env.SLACK_TOKEN) {
     return res.status(500).send('Sea surf!');
   }
