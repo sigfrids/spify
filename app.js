@@ -3,7 +3,7 @@ var bodyParser    = require('body-parser');
 var request       = require('request');
 var dotenv        = require('dotenv');
 var SpotifyWebApi = require('spotify-web-api-node');
-var EchonestApi   = require('./echonest-api');
+var EchonestApi   = require('echojs');
 
 dotenv.load();
 
@@ -13,7 +13,9 @@ var spotifyApi = new SpotifyWebApi({
   redirectUri  : process.env.SPOTIFY_REDIRECT_URI
 });
 
-var echonestApi = new EchonestApi();
+var echonestApi = EchonestApi({
+  key: process.env.ECHONEST_KEY
+});
 
 var app = express();
 app.use(bodyParser.json());
@@ -37,12 +39,21 @@ app.post('/play', function(req, res) {
             var randomNum = Math.floor((Math.random() * data.body.tracks.limit));
             var tmp = 'blah';
 
-            echonestApi.searchSongs(req.body.text)
+            echonestApi('song/search').get({
+              title: req.body.text
+            }, function (err, json) {
+              if (json) {
+                var tmp = json
+              }
+              res.send('Echonest says: ' + err)
+            });
+
+            /*echonestApi.searchSongs(req.body.text)
                 .then(function(result) {
                   if (result.response.status.code === 0 && result.response.songs.length > 0) {
                     tmp = result.response.songs[0].id;
                   }
-                });
+                });*/
 
             var spifyBody = '{"attachments": [ {';
             spifyBody += '"pretext": "' + req.body + tmp + '", ';
