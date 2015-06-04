@@ -44,8 +44,9 @@ app.post('/play', function(req, res) {
             }, function (err, json) {
               if (json) {
                 var tmp = json
+              } else {
+                res.send('Echonest says: ' + err)
               }
-              res.send('Echonest says: ' + err)
             });
 
             /*echonestApi.searchSongs(req.body.text)
