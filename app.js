@@ -53,9 +53,11 @@ app.post('/play', function(req, res) {
                 '</iframe' +
                 '>"}';
 
+            var spifyBody2 = '{"provider_url":"https://embed.spotify.com/oembed/?url=http://open.spotify.com/track/298gs9ATwr2rD9tGYJKlQR"}'
+            
             return request.post({
               url: spifyBotUrl,
-              body: spifyBody1
+              body: spifyBody2
             }, function (error, response, body){
               if (error) {
                 return res.send('Unable to publish to channel.');
