@@ -44,7 +44,7 @@ app.post('/play', function(req, res) {
 
             return request.post({
               url: spifyBotUrl,
-              body: spifyBody2
+              body: spifyBody
             }, function (error, response, body){
               if (error) {
                 return res.send('Unable to publish to channel.');
