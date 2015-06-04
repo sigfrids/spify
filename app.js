@@ -31,12 +31,14 @@ app.post('/play', function(req, res) {
             return res.send('Could not match a track lol ¯|_(ツ)_/¯');
           }
           else {
+            var randomNum = Math.floor((Math.random() * results.limit));
+
             var spifyBody = '{"attachments": [ {';
             spifyBody += '"pretext": "' + req.body + '", ';
-            spifyBody += '"title": "' + results[0].name + '", ';
-            spifyBody += '"title_link": "' + results[0].preview_url + '", ';
-            spifyBody += '"text": "' + 'Artist: ' + results[0].artists[0].name + '\\nAlbum: ' + results[0].album.name + '", ';
-            spifyBody += '"thumb_url": "' + results[0].album.images[1].url + '", ';
+            spifyBody += '"title": "' + results[randomNum].name + '", ';
+            spifyBody += '"title_link": "' + results[randomNum].preview_url + '", ';
+            spifyBody += '"text": "' + 'Artist: ' + results[randomNum].artists[0].name + '\\nAlbum: ' + results[randomNum].album.name + '", ';
+            spifyBody += '"thumb_url": "' + results[randomNum].album.images[1].url + '", ';
             spifyBody += '"color": "#1ED760"';
             spifyBody += '}]}';
 
