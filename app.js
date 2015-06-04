@@ -13,9 +13,7 @@ var spotifyApi = new SpotifyWebApi({
   redirectUri  : process.env.SPOTIFY_REDIRECT_URI
 });
 
-var echonestApi = EchonestApi({
-  key: process.env.ECHONEST_KEY
-});
+var echonestApi = EchonestApi();
 
 var app = express();
 app.use(bodyParser.json());
@@ -37,12 +35,13 @@ app.post('/play', function(req, res) {
           }
           else {
             var randomNum = Math.floor((Math.random() * data.body.tracks.limit));
-            var tmp = 'blah';
 
             echonestApi('song/search').get({
+              key: process.env.ECHONEST_KEY,
+              format: 'json',
               title: req.body.text
             }, function (err, json) {
-              tmp = json.response.songs[0].id;
+              var echo = json.response.songs[0].id;
             });
 
             /*echonestApi.searchSongs(req.body.text)
@@ -53,7 +52,7 @@ app.post('/play', function(req, res) {
                 });*/
 
             var spifyBody = '{"attachments": [ {';
-            spifyBody += '"pretext": "' + req.body.text + tmp + '", ';
+            spifyBody += '"pretext": "' + echo + '", ';
             spifyBody += '"title": "' + results[randomNum].name + '", ';
             spifyBody += '"title_link": "' + results[randomNum].preview_url + '", ';
             spifyBody += '"text": "' + 'Artist: ' + results[randomNum].artists[0].name + '\\nAlbum: ' + results[randomNum].album.name + '", ';
