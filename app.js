@@ -44,9 +44,18 @@ app.post('/play', function(req, res) {
             //results[0].external_urls.spotify
             //results[0].uri
 
+            var spifyBody1 = '{"provider_url":"https://www.spotify.com","version":"1.0","thumbnail_width":300,' +
+                '"height":380,"thumbnail_height":300,"title":"John De Sohn - Dance Our Tears Away - Radio Edit","width":300,' +
+                '"thumbnail_url":"https://d3rt1990lpmkn.cloudfront.net/cover/35ff8ecde854e7c713dc4ffad2f31441e7bc1207",' +
+                '"provider_name":"Spotify","type":"rich",' +
+                '"html":"<iframe src="https://embed.spotify.com/?uri=spotify:track:298gs9ATwr2rD9tGYJKlQR"' +
+                ' width="300" height="380" frameborder="0" allowtransparency="true">' +
+                '</iframe' +
+                '>"}';
+
             return request.post({
               url: spifyBotUrl,
-              body: spifyBody
+              body: spifyBody1
             }, function (error, response, body){
               if (error) {
                 return res.send('Unable to publish to channel.');
