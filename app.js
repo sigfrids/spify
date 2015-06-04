@@ -42,11 +42,7 @@ app.post('/play', function(req, res) {
             echonestApi('song/search').get({
               title: req.body.text
             }, function (err, json) {
-              if (json) {
-                var tmp = json
-              } else {
-                res.send('Echonest says: ' + err)
-              }
+              tmp = json.response.songs[0].id;
             });
 
             /*echonestApi.searchSongs(req.body.text)
@@ -57,7 +53,7 @@ app.post('/play', function(req, res) {
                 });*/
 
             var spifyBody = '{"attachments": [ {';
-            spifyBody += '"pretext": "' + req.body + tmp + '", ';
+            spifyBody += '"pretext": "' + req.body.text + tmp + '", ';
             spifyBody += '"title": "' + results[randomNum].name + '", ';
             spifyBody += '"title_link": "' + results[randomNum].preview_url + '", ';
             spifyBody += '"text": "' + 'Artist: ' + results[randomNum].artists[0].name + '\\nAlbum: ' + results[randomNum].album.name + '", ';
