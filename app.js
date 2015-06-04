@@ -31,7 +31,7 @@ app.post('/play', function(req, res) {
             return res.send('Could not match a track lol ¯|_(ツ)_/¯');
           }
           else {
-            var randomNum = Math.floor((Math.random() * results.limit));
+            var randomNum = Math.floor((Math.random() * data.body.tracks.limit));
 
             var spifyBody = '{"attachments": [ {';
             spifyBody += '"pretext": "' + req.body + '", ';
