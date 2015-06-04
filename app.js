@@ -40,20 +40,7 @@ app.post('/play', function(req, res) {
             spifyBody += '"color": "#1ED760"';
             spifyBody += '}]}';
 
-            //results[0].preview_url
-            //results[0].external_urls.spotify
-            //results[0].uri
-
-            var spifyBody1 = '{"text":"https://www.spotify.com","version":"1.0","thumbnail_width":300,' +
-                '"height":380,"thumbnail_height":300,"title":"John De Sohn - Dance Our Tears Away - Radio Edit","width":300,' +
-                '"thumbnail_url":"https://d3rt1990lpmkn.cloudfront.net/cover/35ff8ecde854e7c713dc4ffad2f31441e7bc1207",' +
-                '"provider_name":"Spotify","type":"rich",' +
-                '"html":"<iframe src="https://embed.spotify.com/?uri=spotify:track:298gs9ATwr2rD9tGYJKlQR"' +
-                ' width="300" height="380" frameborder="0" allowtransparency="true">' +
-                '</iframe' +
-                '>"}';
-
-            var spifyBody2 = '{"text":"https://embed.spotify.com/oembed/?url=http://open.spotify.com/track/298gs9ATwr2rD9tGYJKlQR"}';
+            var spifyBody2 = '{"text":"https://embed.spotify.com/oembed/?url=' + results[0].external_urls.spotify + '"}';
 
             return request.post({
               url: spifyBotUrl,
