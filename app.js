@@ -32,7 +32,7 @@ app.post('/play', function(req, res) {
           }
           else {
             var spifyBody = '{"attachments": [ {';
-            spifyBody += '"pretext": "' + req.body.text + '", ';
+            spifyBody += '"pretext": "' + req.body + '", ';
             spifyBody += '"title": "' + results[0].name + '", ';
             spifyBody += '"title_link": "' + results[0].preview_url + '", ';
             spifyBody += '"text": "' + 'Artist: ' + results[0].artists[0].name + '\\nAlbum: ' + results[0].album.name + '", ';
