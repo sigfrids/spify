@@ -53,7 +53,7 @@ app.post('/play', function(req, res) {
                 '</iframe' +
                 '>"}';
 
-            var spifyBody2 = '{"text":"https://embed.spotify.com/oembed/?url=http://open.spotify.com/track/298gs9ATwr2rD9tGYJKlQR"}'
+            var spifyBody2 = '{"text":"https://embed.spotify.com/oembed/?url=http://open.spotify.com/track/298gs9ATwr2rD9tGYJKlQR"}';
 
             return request.post({
               url: spifyBotUrl,
