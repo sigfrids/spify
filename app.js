@@ -34,12 +34,13 @@ app.post('/play', function(req, res) {
         var randomNum = Math.floor((Math.random() * data.body.tracks.limit));
 
         var spifyBody = '{"attachments": [ {';
-        spifyBody += '"pretext": "Ok ' + req.body.user_name + ', here is some ' + req.body.text + ' for you:", ';
+        spifyBody += '"pretext": "Ok ' + req.body.user_name + ', here is some _' + req.body.text + '_ for you:", ';
         spifyBody += '"title": "' + results[randomNum].name + '", ';
         spifyBody += '"title_link": "' + results[randomNum].preview_url + '", ';
-        spifyBody += '"text": "' + 'Artist: ' + results[randomNum].artists[0].name + '\\nAlbum: ' + results[randomNum].album.name + '", ';
+        spifyBody += '"text": "' + '*Artist*: ' + results[randomNum].artists[0].name + '\\n*Album*: ' + results[randomNum].album.name + '", ';
         spifyBody += '"thumb_url": "' + results[randomNum].album.images[1].url + '", ';
-        spifyBody += '"color": "#1ED760"';
+        spifyBody += '"color": "#1ED760", '
+        spifyBody += '"mrkdwn_in": ["text", "pretext"]"';
         spifyBody += '}]}';        
 
         return request.post({
