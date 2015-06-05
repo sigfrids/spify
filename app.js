@@ -34,7 +34,7 @@ app.post('/play', function(req, res) {
         var randomNum = Math.floor((Math.random() * data.body.tracks.limit));
 
         var spifyBody = '{"attachments": [ {';
-        spifyBody += '"pretext": "Ok anon, here is some ' + req.body.text + ' for you:", ';
+        spifyBody += '"pretext": "Ok anon, here is some ' + req.body + ' for you:", ';
         spifyBody += '"title": "' + results[randomNum].name + '", ';
         spifyBody += '"title_link": "' + results[randomNum].preview_url + '", ';
         spifyBody += '"text": "' + 'Artist: ' + results[randomNum].artists[0].name + '\\nAlbum: ' + results[randomNum].album.name + '", ';
