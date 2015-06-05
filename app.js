@@ -27,7 +27,56 @@ app.post('/play', function(req, res) {
   if (req.body.token !== process.env.SLACK_TOKEN) {
     return res.status(500).send('Sea surf!');
   }
-  spotifyApi.searchTracks(req.body.text)
+  else {
+  echonestApi('song/search').get({
+    key: process.env.ECHONEST_KEY,
+    format: 'json',
+    title: req.body.text
+  }, function (err, json) {
+      var echoTitle = json.response.songs[0].title;
+      var echoArtist = json.response.songs[0].artist_name;
+    });
+
+  spotifyApi.searchTracks('artist:' + echoArtist + ', title:' + echoTitle)
+    .then(function(data) {
+      var results = data.body.tracks.items
+      if (results.length === 0) {
+        return res.send('Could not match a track lol ¯|_(ツ)_/¯');
+      }
+      else {
+
+        var randomNum = Math.floor((Math.random() * results.length));
+
+        var spifyBody = '{"attachments": [ {';
+        spifyBody += '"pretext": ""Ok anon, here is some "' + req.body.text + '" for you:", ';
+        spifyBody += '"title": "' + results[randomNum].name + '", ';
+        spifyBody += '"title_link": "' + results[randomNum].preview_url + '", ';
+        spifyBody += '"text": "' + 'Artist: ' + results[randomNum].artists[0].name + '\\nAlbum: ' + results[randomNum].album.name + '", ';
+        spifyBody += '"thumb_url": "' + results[randomNum].album.images[1].url + '", ';
+        spifyBody += '"color": "#1ED760"';
+        spifyBody += '}]}';        
+      }
+    })
+
+  /*var spifyBody = '{"attachments": [ {';
+  spifyBody += '"pretext": "' + echo + '", ';
+  spifyBody += '"title": "' + results[randomNum].name + '", ';
+  spifyBody += '"title_link": "' + results[randomNum].preview_url + '", ';
+  spifyBody += '"text": "' + 'Artist: ' + results[randomNum].artists[0].name + '\\nAlbum: ' + results[randomNum].album.name + '", ';
+  spifyBody += '"thumb_url": "' + results[randomNum].album.images[1].url + '", ';
+  spifyBody += '"color": "#1ED760"';
+  spifyBody += '}]}';*/
+
+  return request.post({
+  url: spifyBotUrl,
+  body: spifyBody
+  }, function (error, response, body){
+      if (error) {
+        return res.send('Unable to publish to channel.');
+      }
+  });
+
+  /*spotifyApi.searchTracks(req.body.text)
         .then(function(data) {
           var results = data.body.tracks.items;
           if (results.length === 0) {
@@ -49,7 +98,7 @@ app.post('/play', function(req, res) {
                   if (result.response.status.code === 0 && result.response.songs.length > 0) {
                     tmp = result.response.songs[0].id;
                   }
-                });*/
+                });
 
             var spifyBody = '{"attachments": [ {';
             spifyBody += '"pretext": "' + echo + '", ';
@@ -70,7 +119,7 @@ app.post('/play', function(req, res) {
                 return res.send('Unable to publish to channel.');
               }
             });
-          }
+          }*/
         }, function(err) {
           return res.send(err.message);
         });
