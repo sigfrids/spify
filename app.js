@@ -56,16 +56,9 @@ app.post('/play', function(req, res) {
         spifyBody += '"color": "#1ED760"';
         spifyBody += '}]}';        
       }
-    })
-
-  /*var spifyBody = '{"attachments": [ {';
-  spifyBody += '"pretext": "' + echo + '", ';
-  spifyBody += '"title": "' + results[randomNum].name + '", ';
-  spifyBody += '"title_link": "' + results[randomNum].preview_url + '", ';
-  spifyBody += '"text": "' + 'Artist: ' + results[randomNum].artists[0].name + '\\nAlbum: ' + results[randomNum].album.name + '", ';
-  spifyBody += '"thumb_url": "' + results[randomNum].album.images[1].url + '", ';
-  spifyBody += '"color": "#1ED760"';
-  spifyBody += '}]}';*/
+    }, function(err) {
+        return res.send(err.message);
+    });
 
   return request.post({
   url: spifyBotUrl,
@@ -120,10 +113,8 @@ app.post('/play', function(req, res) {
               }
             });
           }*/
-        }, function(err) {
-          return res.send(err.message);
-        });
-});
+    };
+  });
 
 app.set('port', (process.env.PORT || 5000));
 app.listen(app.get('port'));
