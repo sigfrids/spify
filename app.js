@@ -13,7 +13,9 @@ var spotifyApi = new SpotifyWebApi({
   redirectUri  : process.env.SPOTIFY_REDIRECT_URI
 });
 
-var echonestApi = EchonestApi();
+var echonestApi = EchonestApi({
+  key: process.env.ECHONEST_KEY
+});
 
 var app = express();
 app.use(bodyParser.json());
@@ -29,15 +31,13 @@ app.post('/play', function(req, res) {
   }
   else {
   echonestApi('song/search').get({
-    key: process.env.ECHONEST_KEY,
     format: 'json',
     title: req.body.text
   }, function (err, json) {
       var echoTitle = json.response.songs[0].title;
-      var echoArtist = json.response.songs[0].artist_name;
     });
 
-  spotifyApi.searchTracks('artist:' + echoArtist + ', title:' + echoTitle)
+  spotifyApi.searchTracks(echoTitle)
     .then(function(data) {
       var results = data.body.tracks.items
       if (results.length === 0) {
