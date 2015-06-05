@@ -3,7 +3,6 @@ var bodyParser    = require('body-parser');
 var request       = require('request');
 var dotenv        = require('dotenv');
 var SpotifyWebApi = require('spotify-web-api-node');
-var EchonestApi   = require('echojs');
 
 dotenv.load();
 
@@ -33,7 +32,7 @@ app.post('/play', function(req, res) {
         return res.send('Could not match a track lol ¯|_(ツ)_/¯');
       }
       else {
-        var randomNum = Math.floor((Math.random() * results.length));
+        var randomNum = Math.floor((Math.random() * data.body.tracks.limit));
 
         var spifyBody = '{"attachments": [ {';
         spifyBody += '"pretext": ""Ok anon, here is some "' + req.body.text + '" for you:", ';
