@@ -43,19 +43,19 @@ app.post('/play', function(req, res) {
         spifyBody += '"thumb_url": "' + results[randomNum].album.images[1].url + '", ';
         spifyBody += '"color": "#1ED760"';
         spifyBody += '}]}';        
+
+        return request.post({
+          url: spifyBotUrl,
+          body: spifyBody
+        }, function (error, response, body){
+          if (error) {
+            return res.send('Unable to publish to channel.');
+          }
+        });
       }
     }, function(err) {
         return res.send(err.message);
     });
-
-  return request.post({
-  url: spifyBotUrl,
-  body: spifyBody
-  }, function (error, response, body){
-      if (error) {
-        return res.send('Unable to publish to channel.');
-      }
-  });
 
   /*spotifyApi.searchTracks(req.body.text)
         .then(function(data) {
