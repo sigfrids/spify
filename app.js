@@ -13,10 +13,6 @@ var spotifyApi = new SpotifyWebApi({
   redirectUri  : process.env.SPOTIFY_REDIRECT_URI
 });
 
-var echonestApi = EchonestApi({
-  key: process.env.ECHONEST_KEY
-});
-
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -30,13 +26,6 @@ app.post('/play', function(req, res) {
     return res.status(500).send('Sea surf!');
   }
   else {
-  echonestApi('song/search').get({
-    format: 'json',
-    title: req.body.text
-  }, function (err, json) {
-      var echoTitle = json.response.songs[0].title;
-    });
-
   spotifyApi.searchTracks(echoTitle)
     .then(function(data) {
       var results = data.body.tracks.items
@@ -44,7 +33,6 @@ app.post('/play', function(req, res) {
         return res.send('Could not match a track lol ¯|_(ツ)_/¯');
       }
       else {
-
         var randomNum = Math.floor((Math.random() * results.length));
 
         var spifyBody = '{"attachments": [ {';
