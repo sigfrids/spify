@@ -26,7 +26,7 @@ app.post('/play', function(req, res) {
     return res.status(500).send('Sea surf!');
   }
   else {
-  spotifyApi.searchTracks(echoTitle)
+  spotifyApi.searchTracks(req.body.text)
     .then(function(data) {
       var results = data.body.tracks.items
       if (results.length === 0) {
