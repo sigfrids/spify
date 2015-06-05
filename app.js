@@ -26,15 +26,15 @@ app.post('/play', function(req, res) {
   }
   spotifyApi.searchTracks(req.body.text)
     .then(function(data) {
-      var results = data.body.tracks.items
+      var results = data.body.tracks.items;
       if (results.length === 0) {
         return res.send('Could not match a track lol ¯|_(ツ)_/¯');
       }
       else {
-        var randomNum = 0; //Math.floor((Math.random() * results.limit));
+        var randomNum = 0; //Math.floor((Math.random() * data.body.tracks.limit));
 
         var spifyBody = '{"attachments": [ {';
-        spifyBody += '"pretext": ""Ok anon, here is some "' + req.body.text + '" for you:", ';
+        spifyBody += '"pretext": "Ok anon, here is some ' + req.body.text + ' for you:", ';
         spifyBody += '"title": "' + results[randomNum].name + '", ';
         spifyBody += '"title_link": "' + results[randomNum].preview_url + '", ';
         spifyBody += '"text": "' + 'Artist: ' + results[randomNum].artists[0].name + '\\nAlbum: ' + results[randomNum].album.name + '", ';
