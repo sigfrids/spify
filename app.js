@@ -24,7 +24,6 @@ app.post('/play', function(req, res) {
   if (req.body.token !== process.env.SLACK_TOKEN) {
     return res.status(500).send('Sea surf!');
   }
-  else {
   spotifyApi.searchTracks(req.body.text)
     .then(function(data) {
       var results = data.body.tracks.items
@@ -32,7 +31,7 @@ app.post('/play', function(req, res) {
         return res.send('Could not match a track lol ¯|_(ツ)_/¯');
       }
       else {
-        var randomNum = Math.floor((Math.random() * data.body.tracks.limit));
+        var randomNum = Math.floor((Math.random() * results.limit));
 
         var spifyBody = '{"attachments": [ {';
         spifyBody += '"pretext": ""Ok anon, here is some "' + req.body.text + '" for you:", ';
@@ -54,53 +53,7 @@ app.post('/play', function(req, res) {
       }
     }, function(err) {
         return res.send(err.message);
-    });
-
-  /*spotifyApi.searchTracks(req.body.text)
-        .then(function(data) {
-          var results = data.body.tracks.items;
-          if (results.length === 0) {
-            return res.send('Could not match a track lol ¯|_(ツ)_/¯');
-          }
-          else {
-            var randomNum = Math.floor((Math.random() * data.body.tracks.limit));
-
-            echonestApi('song/search').get({
-              key: process.env.ECHONEST_KEY,
-              format: 'json',
-              title: req.body.text
-            }, function (err, json) {
-              var echo = json.response.songs[0].id;
-            });
-
-            /*echonestApi.searchSongs(req.body.text)
-                .then(function(result) {
-                  if (result.response.status.code === 0 && result.response.songs.length > 0) {
-                    tmp = result.response.songs[0].id;
-                  }
-                });
-
-            var spifyBody = '{"attachments": [ {';
-            spifyBody += '"pretext": "' + echo + '", ';
-            spifyBody += '"title": "' + results[randomNum].name + '", ';
-            spifyBody += '"title_link": "' + results[randomNum].preview_url + '", ';
-            spifyBody += '"text": "' + 'Artist: ' + results[randomNum].artists[0].name + '\\nAlbum: ' + results[randomNum].album.name + '", ';
-            spifyBody += '"thumb_url": "' + results[randomNum].album.images[1].url + '", ';
-            spifyBody += '"color": "#1ED760"';
-            spifyBody += '}]}';
-
-            var spifyBody2 = '{"text":"https://embed.spotify.com/oembed/?url=' + results[0].external_urls.spotify + '"}';
-
-            return request.post({
-              url: spifyBotUrl,
-              body: spifyBody
-            }, function (error, response, body){
-              if (error) {
-                return res.send('Unable to publish to channel.');
-              }
-            });
-          }*/
-    };
+      });
   });
 
 app.set('port', (process.env.PORT || 5000));
