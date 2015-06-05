@@ -28,7 +28,7 @@ app.post('/play', function(req, res) {
     .then(function(data) {
       var results = data.body.tracks.items;
       if (results.length === 0) {
-        return res.send('Could not match a track lol ¯|_(ツ)_/¯');
+        return res.send('Could not match a track lol ¯|_(ツ)_/¯' + req.body.cannel_id);
       }
       else {
         var randomNum = Math.floor((Math.random() * data.body.tracks.limit));
