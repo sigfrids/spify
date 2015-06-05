@@ -40,7 +40,7 @@ app.post('/play', function(req, res) {
         spifyBody += '"text": "' + '*Artist*: ' + results[randomNum].artists[0].name + '\\n*Album*: ' + results[randomNum].album.name + '", ';
         spifyBody += '"thumb_url": "' + results[randomNum].album.images[1].url + '", ';
         spifyBody += '"color": "#1ED760", '
-        spifyBody += '"mrkdwn_in": ["text", "pretext"]"';
+        spifyBody += '"mrkdwn_in": ["text", "pretext"]';
         spifyBody += '}]}';        
 
         return request.post({
